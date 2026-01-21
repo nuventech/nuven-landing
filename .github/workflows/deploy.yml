@@ -1,0 +1,58 @@
+# name: Deploy Next.js SSG to DonWeb
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: 🛎️ Checkout
+#         uses: actions/checkout@v4
+
+#       - name: 🚀 Setup Bun
+#         uses: oven-sh/setup-bun@v2
+#         with:
+#           bun-version: latest
+
+#       - name: ⚡️ Cache Bun dependencies
+#         uses: actions/cache@v4
+#         with:
+#           path: ~/.bun/install/cache
+#           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+#           restore-keys: |
+#             ${{ runner.os }}-bun-
+
+#       - name: 🟢 Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '24.10.0'
+
+#       - name: 📦 Install Dependencies
+#         run: bun install --frozen-lockfile
+
+#       - name: 🏗️ Build SSG
+#         run: bun run build:core
+
+#       - name: 📦 Install Zip
+#         run: sudo apt-get install -y zip
+
+#       - name: 🗜️ Zip Output
+#         run: |
+#           cp unzip.php out/unzip.php
+#           cd out
+#           zip -r ../deploy.zip .
+#           cd ..
+
+#       - name: 🚀 Deploy Zip & Unzip Script
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y lftp
+#           lftp -c "set ftp:ssl-allow no; open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }}; put -O ./public_html deploy.zip; put -O ./public_html out/unzip.php;"
+
+#       - name: 🔓 Trigger Unzip
+#         run: curl --fail https://solucionesproyectables.com/unzip.php
