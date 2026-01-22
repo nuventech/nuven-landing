@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 //TODO Adaptar segun la empresa
 // Es un listado estructurado de todas las URLs importantes del sitio.
 // Sirve para:
@@ -7,7 +9,7 @@ import { MetadataRoute } from 'next';
 // -Indicar prioridad de páginas o frecuencia de actualización.
 // -Indispensable si tu sitio tiene contenido dinámico.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://TU_DOMINIO.com';
+  const baseUrl = 'https://nuven.tech';
 
   return [
     {

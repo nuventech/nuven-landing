@@ -1,7 +1,7 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { DM_Sans, Geist_Mono } from 'next/font/google';
 
 import { JsonLd } from './_config/JsonLd';
 import {
@@ -10,9 +10,10 @@ import {
   webSiteConfig,
 } from './_config/site';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 const geistMono = Geist_Mono({
@@ -31,23 +32,23 @@ const geistMono = Geist_Mono({
 // Utilizar etiquetas aria para mayor SEO y accesibilidad
 // Utilizar Server Components siempre que sea posible para optimizar rendimiento
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tudominio.com'),
+  metadataBase: new URL('https://nuven.com.ar'),
   title: {
-    default: 'Nombre de tu marca',
-    template: '%s | Nombre de tu marca',
+    default: 'Nuven',
+    template: '%s | Nuven',
   },
   description: 'Texto corto que explique claramente tu propuesta de valor.',
   openGraph: {
-    title: 'Nombre de tu marca',
+    title: 'Nuven',
     description: 'Texto de descripción para cuando compartan el link.',
-    url: 'https://tudominio.com',
-    siteName: 'Nombre de tu marca',
+    url: 'https://nuven.com.ar',
+    siteName: 'Nuven',
     locale: 'es_AR',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nombre de tu marca',
+    title: 'Nuven',
     description: 'Descripción pensada para Twitter/X.',
   },
   robots: {
@@ -64,9 +65,7 @@ export default function RootLayout({
   console.log('renderizando server...');
   return (
     <html lang="es-AR">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${dmSans.variable} ${geistMono.variable} antialiased`}>
         <JsonLd id="schema-org" schema={organizationConfig} />
         <JsonLd id="schema-local-business" schema={localBusinessConfig} />
         <JsonLd id="schema-website" schema={webSiteConfig} />

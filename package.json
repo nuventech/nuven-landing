@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "bun granular-images optimize && next build",
+    "build:core": "next build",
     "start": "next start",
+    "preview": "serve out",
     "lint": "eslint .",
     "prettier": "prettier .",
     "format": "pnpm run lint --fix && pnpm prettier --write .",
     "prepare": "husky",
-    "fresh-install": "node scripts/fresh-install.js"
+    "fresh-install": "node scripts/fresh-install.js",
+    "granular-images": "next-granular-images"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -38,6 +41,8 @@
     "@radix-ui/react-slot": "1.2.4",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "framer-motion": "12.28.1",
+    "gsap": "3.14.2",
     "lucide-react": "0.554.0",
     "next": "16.0.3",
     "next-granular-images": "1.0.1",
