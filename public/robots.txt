@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /_next
+Disallow: /api
+
+Sitemap: https://nuven.tech/sitemap.xml
+Host: https://nuven.tech
