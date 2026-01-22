@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 //TODO Adaptar segun la empresa
 // Es un listado estructurado de todas las URLs importantes del sitio.
 // Sirve para:
