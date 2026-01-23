@@ -1,6 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -20,7 +19,7 @@ export function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -35,11 +34,11 @@ export function Navbar() {
           <nav
             className={`
               relative mx-auto rounded-xl border border-white/10 
-              transition-all duration-300 backdrop-blur-md p-2
+              transition-all duration-300 p-2
               ${
                 scrolled
-                  ? 'bg-black/60 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]'
-                  : 'bg-white/5 shadow-lg'
+                  ? 'bg-black/90 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]'
+                  : 'bg-[#111]/50 shadow-lg'
               }
             `}
           >
@@ -96,43 +95,38 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl md:hidden pt-24 px-6"
+      {/* Mobile Menu Overlay - Optimized with Tailwind */}
+      <div
+        className={`fixed inset-0 z-40 bg-black transition-all duration-300 md:hidden pt-24 px-6 ${
+          isOpen
+            ? 'opacity-100 pointer-events-auto visible'
+            : 'opacity-0 pointer-events-none invisible'
+        }`}
+      >
+        <div className="flex flex-col gap-6 items-center">
+          {NAV_LINKS.map((item, i) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+              className={`text-2xl font-medium text-white/90 hover:text-[#CCFF00] transition-all duration-500 delay-[${i * 50}ms] ${
+                isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              }`}
+            >
+              {item.name}
+            </a>
+          ))}
+          <a
+            href="#contacto"
+            onClick={() => setIsOpen(false)}
+            className={`mt-4 bg-[#CCFF00] text-black px-8 py-3 rounded-full font-bold text-lg w-full text-center transition-all duration-500 delay-200 ${
+              isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+            }`}
           >
-            <div className="flex flex-col gap-6 items-center">
-              {NAV_LINKS.map((item, i) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="text-2xl font-medium text-white/90 hover:text-[#CCFF00]"
-                >
-                  {item.name}
-                </motion.a>
-              ))}
-              <motion.a
-                href="#contacto"
-                onClick={() => setIsOpen(false)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="mt-4 bg-[#CCFF00] text-black px-8 py-3 rounded-full font-bold text-lg w-full text-center"
-              >
-                Agendar Estrategia
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Agendar Estrategia
+          </a>
+        </div>
+      </div>
     </>
   );
 }

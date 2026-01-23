@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
 import { AlertCircle, FileSpreadsheet, Network } from 'lucide-react';
 import { useRef } from 'react';
+
+import { useInView } from '@/src/hooks/useInView';
 
 const problems = [
   {
@@ -26,50 +27,48 @@ const problems = [
 ];
 
 export function PainPoints() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <section
       id="desafios"
-      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden"
+      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden section-optimized"
       ref={ref}
     >
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
-        <div className="absolute right-0 top-0 w-96 h-96 bg-[#CCFF00] blur-[150px] rounded-full mix-blend-screen opacity-5" />
-      </div>
+      {/* Background decoration - Optimized without blurs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(204,255,0,0.03)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-20">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-5xl font-bold text-white mb-6 tracking-tight"
+          <h2
+            className={`text-3xl sm:text-5xl font-bold text-white mb-6 tracking-tight transition-all duration-700 delay-100 ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
           >
             ¿Tu infraestructura <span className="text-[#CCFF00]">limita</span>{' '}
             tu expansión?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-neutral-400"
+          </h2>
+          <p
+            className={`text-xl text-neutral-400 transition-all duration-700 delay-300 ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
           >
             Identificamos los indicadores clave que señalan la necesidad de una
             transformación digital profunda.
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {problems.map((item, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#CCFF00]/50 transition-all duration-300 hover:bg-white/10 relative overflow-hidden"
+              style={{ transitionDelay: `${index * 150 + 500}ms` }}
+              className={`group p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#CCFF00]/50 transition-all duration-500 hover:bg-white/10 relative overflow-hidden ${
+                isInView
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8'
+              }`}
             >
               <div className="absolute top-0 left-0 w-1 h-full bg-[#CCFF00] scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
 
@@ -83,7 +82,7 @@ export function PainPoints() {
               <p className="text-neutral-400 leading-relaxed">
                 {item.description}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

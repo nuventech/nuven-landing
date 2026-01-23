@@ -43,6 +43,8 @@
   --radius-xl: calc(var(--radius) + 4px);
   --animate-float: float 6s ease-in-out infinite;
   --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-slow-spin: slow-spin 20s linear infinite;
+  --animate-slow-spin-reverse: slow-spin-reverse 25s linear infinite;
 
   @keyframes float {
     0%,
@@ -60,6 +62,24 @@
     }
     to {
       box-shadow: 0 0 25px -5px var(--primary);
+    }
+  }
+
+  @keyframes slow-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes slow-spin-reverse {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
     }
   }
 }
@@ -149,8 +169,21 @@
 
   body {
     @apply bg-background text-foreground;
-    /* Premium subtle texture overlay */
     background-color: #050505;
+    font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv02';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Isolated background layer to prevent full-page repaints */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
     background-image:
       radial-gradient(at 0% 0%, rgba(204, 255, 0, 0.03) 0px, transparent 50%),
       radial-gradient(
@@ -159,8 +192,7 @@
         transparent 50%
       ),
       url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-    font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv02';
-    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0); /* Force compositor layer */
   }
 
   ::selection {
@@ -170,6 +202,12 @@
 }
 
 @layer utilities {
+  .section-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 800px;
+    contain: layout style;
+  }
+
   .text-balance {
     text-wrap: balance;
   }

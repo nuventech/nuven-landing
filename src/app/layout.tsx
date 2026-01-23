@@ -3,6 +3,9 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { DM_Sans, Geist_Mono } from 'next/font/google';
 
+import { Footer } from '@/src/components/common/Footer';
+import { Navbar } from '@/src/components/common/Navbar';
+
 import { JsonLd } from './_config/JsonLd';
 import {
   localBusinessConfig,
@@ -65,11 +68,13 @@ export default function RootLayout({
   console.log('renderizando server...');
   return (
     <html lang="es-AR">
+      <JsonLd id="schema-org" schema={organizationConfig} />
+      <JsonLd id="schema-local-business" schema={localBusinessConfig} />
+      <JsonLd id="schema-website" schema={webSiteConfig} />
       <body className={`${dmSans.variable} ${geistMono.variable} antialiased`}>
-        <JsonLd id="schema-org" schema={organizationConfig} />
-        <JsonLd id="schema-local-business" schema={localBusinessConfig} />
-        <JsonLd id="schema-website" schema={webSiteConfig} />
-        {children}
+        <Navbar />
+        <main className="w-full">{children}</main>
+        <Footer />
       </body>
     </html>
   );

@@ -1,12 +1,13 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
 import { ArrowUpRight, Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 
+import { useInView } from '@/src/hooks/useInView';
+
 export function Footer() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [formData, setFormData] = useState({
     nombre: '',
@@ -31,12 +32,14 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left - Headline & Contact */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
+          <div
+            className={`transition-all duration-700 ${
+              isInView
+                ? 'opacity-100 translate-x-0'
+                : 'opacity-0 -translate-x-8'
+            }`}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 w-fit backdrop-blur-sm mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 w-fit mb-6">
               <span className="w-2 h-2 rounded-full bg-[#CCFF00]" />
               <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
                 Contacto
@@ -71,14 +74,13 @@ export function Footer() {
                 <span className="text-lg">+54 9 11 5566-7788</span>
               </a>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right - Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md"
+          <div
+            className={`bg-[#111] border border-white/10 rounded-2xl p-8 transition-all duration-700 delay-200 ${
+              isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+            }`}
           >
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -149,7 +151,7 @@ export function Footer() {
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
             </form>
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom */}

@@ -1,6 +1,5 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
 import {
   ArrowUpRight,
   Database,
@@ -10,6 +9,8 @@ import {
   ShoppingCart,
 } from 'lucide-react';
 import { useRef } from 'react';
+
+import { useInView } from '@/src/hooks/useInView';
 
 const services = [
   {
@@ -54,21 +55,26 @@ const services = [
 ];
 
 export function ServicesGrid() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="servicios" className="py-32 relative" ref={ref}>
+    <section
+      id="servicios"
+      className="py-32 relative section-optimized"
+      ref={ref}
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#CCFF00]/5 via-transparent to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl"
+          <div
+            className={`max-w-2xl transition-all duration-700 ${
+              isInView
+                ? 'opacity-100 translate-x-0'
+                : 'opacity-0 -translate-x-8'
+            }`}
           >
             <h2 className="text-sm font-mono text-[#CCFF00] mb-4 tracking-wider uppercase">
               Nuestras Soluciones
@@ -76,36 +82,41 @@ export function ServicesGrid() {
             <h3 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
               Soluciones de Ingeniería <br /> para Desafíos Complejos.
             </h3>
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-neutral-400 max-w-sm text-lg"
+          <p
+            className={`text-neutral-400 max-w-sm text-lg transition-all duration-700 delay-200 ${
+              isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+            }`}
           >
             Nos enfocamos en producto y escalabilidad. Desarrollo de software de
             alto nivel, no sitios web genéricos.
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              style={{
+                transitionDelay: `${index * 100 + 300}ms`,
+                willChange: 'transform, opacity',
+              }}
               className={`
                 group relative overflow-hidden rounded-2xl border border-white/10 
-                bg-white/5 hover:bg-white/10 transition-colors duration-500
-                backdrop-blur-sm p-8 flex flex-col justify-between h-full min-h-[300px]
+                bg-white/5 hover:bg-white/10 transition-all duration-500
+                p-8 flex flex-col justify-between h-full min-h-[300px]
                 ${service.span}
+                ${
+                  isInView
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-8'
+                }
               `}
             >
               {/* Hover Gradient Background */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 md:group-hover:opacity-100 transition-opacity duration-500`}
               />
 
               <div className="relative z-10">
@@ -126,7 +137,7 @@ export function ServicesGrid() {
                   <ArrowUpRight className="w-5 h-5" />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
