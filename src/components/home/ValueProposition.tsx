@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
 import { Code2, Target, Zap } from 'lucide-react';
 import { useRef } from 'react';
+
+import { useInView } from '@/src/hooks/useInView';
 
 const features = [
   {
@@ -26,24 +27,29 @@ const features = [
 ];
 
 export function ValueProposition() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <section
       id="estrategia"
-      className="py-24 sm:py-32 bg-[#050505] relative content-visibility-auto"
+      className="py-24 sm:py-32 bg-[#050505] relative section-optimized"
       ref={ref}
     >
-      {/* Subtle grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#202020_1px,transparent_1px),linear-gradient(to_bottom,#202020_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20" />
+      {/* Subtle grid background - Optimized without mask-image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#202020_1px,transparent_1px),linear-gradient(to_bottom,#202020_1px,transparent_1px)] bg-[size:32px_32px] opacity-20" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,transparent_0%,#050505_70%)]" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+          <div
+            className={`transition-all duration-700 ${
+              isInView
+                ? 'opacity-100 translate-x-0'
+                : 'opacity-0 -translate-x-8'
+            }`}
           >
             <h2 className="text-4xl sm:text-6xl font-bold text-white leading-none mb-6">
               Software diseñado a la medida de{' '}
@@ -56,22 +62,24 @@ export function ValueProposition() {
               Superamos el desarrollo convencional. Ingeniería transparente
               centrada en resultados tangibles, sin tecnicismos innecesarios.
             </p>
-          </motion.div>
+          </div>
 
-          {/* Abstract visual element */}
+          {/* Abstract visual element - Optimized without blurs */}
           <div className="hidden lg:block relative h-full min-h-[200px]">
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#CCFF00] blur-[100px] opacity-10 rounded-full" />
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 bg-[radial-gradient(circle,rgba(204,255,0,0.08)_0%,transparent_70%)] opacity-10 rounded-full" />
           </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + idx * 0.15 }}
-              className="group p-8 border-t border-white/10 hover:border-[#CCFF00] transition-colors duration-300 relative"
+              style={{ transitionDelay: `${idx * 150 + 400}ms` }}
+              className={`group p-8 border-t border-white/10 hover:border-[#CCFF00] transition-all duration-500 relative ${
+                isInView
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8'
+              }`}
             >
               <div className="absolute top-0 right-0 w-px h-10 bg-gradient-to-b from-white/10 to-transparent group-hover:from-[#CCFF00] transition-colors" />
 
@@ -85,7 +93,7 @@ export function ValueProposition() {
               <p className="text-neutral-400 text-lg leading-relaxed">
                 {feature.description}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

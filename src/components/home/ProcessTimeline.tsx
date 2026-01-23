@@ -1,8 +1,9 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { Code, Map, Rocket, Search, ShieldCheck } from 'lucide-react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { useInView } from '@/src/hooks/useInView';
 
 const processSteps = [
   {
@@ -21,7 +22,7 @@ const processSteps = [
     icon: Code,
     title: '3. Desarrollo Iterativo',
     description:
-      'Sprints quincenales con entregables tangibles. Validación continua para ajustar el rumbo tempranamente.',
+      'Sprints quincenales con entregables tangibles. Validation continua para ajustar el rumbo tempranamente.',
   },
   {
     icon: ShieldCheck,
@@ -38,46 +39,66 @@ const processSteps = [
 ];
 
 export function ProcessTimeline() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const progressLineRef = useRef<HTMLDivElement>(null);
+  const dimensionsRef = useRef({ top: 0, bottom: 0, height: 0 });
 
-  // Create a scroll progress tracker for the timeline line
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const scrollY = window.scrollY;
+      dimensionsRef.current = {
+        top: rect.top + scrollY,
+        bottom: rect.bottom + scrollY,
+        height: rect.height,
+      };
+    };
 
-  // Transform scroll progress to scaleY for the line
-  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+    const handleScroll = () => {
+      if (!progressLineRef.current) return;
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const { top, height } = dimensionsRef.current;
+
+      const start = top - windowHeight;
+      const total = height + windowHeight;
+
+      let progress = (scrollY - start) / total;
+      progress = Math.max(0, Math.min(1, progress));
+
+      progressLineRef.current.style.transform = `translateX(-50%) scaleY(${progress})`;
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <section
       id="proceso"
-      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden content-visibility-auto"
+      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden section-optimized"
       ref={containerRef}
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="text-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#CCFF00]/10 border border-[#CCFF00]/20 w-fit mb-6"
-          >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#CCFF00]/10 border border-[#CCFF00]/20 w-fit mb-6">
             <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
             <span className="text-xs font-bold text-[#CCFF00] uppercase tracking-wider">
               Workflow
             </span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-bold text-white mb-6"
-          >
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-6">
             Transparencia Absoluta, <br />
             <span className="text-neutral-500">sin cajas negras.</span>
-          </motion.h2>
+          </h2>
         </div>
 
         <div className="relative">
@@ -85,9 +106,14 @@ export function ProcessTimeline() {
           <div className="absolute left-8 sm:left-1/2 top-0 bottom-0 w-px bg-neutral-800 -translate-x-1/2" />
 
           {/* Vertical Connecting Line (Active Progress) */}
-          <motion.div
-            style={{ scaleY }}
-            className="absolute left-8 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#CCFF00] via-[#CCFF00] to-transparent -translate-x-1/2 origin-top will-change-transform"
+          <div
+            ref={progressLineRef}
+            style={{
+              transform: 'translateX(-50%) scaleY(0)',
+              transformOrigin: 'top',
+              willChange: 'transform',
+            }}
+            className="absolute left-8 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#CCFF00] via-[#CCFF00] to-transparent"
           />
 
           <div className="space-y-12 sm:space-y-24">
@@ -101,7 +127,7 @@ export function ProcessTimeline() {
   );
 }
 
-// Define the type for the Lucide icon component, which is a Functional Component accepting SVG props
+// Define the type for the Lucide icon component
 type LucideIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
 interface Step {
@@ -112,14 +138,19 @@ interface Step {
 
 function TimelineItem({ step, index }: { step: Step; index: number }) {
   const isEven = index % 2 === 0;
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`relative flex flex-col sm:flex-row gap-6 sm:gap-0 items-start sm:items-center ${isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'}`}
+    <div
+      ref={ref}
+      className={`relative flex flex-col sm:flex-row gap-6 sm:gap-0 items-start sm:items-center transition-all duration-700 ${
+        isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      } ${isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'}`}
+      style={{
+        transitionDelay: `${index * 100}ms`,
+        willChange: 'transform, opacity',
+      }}
     >
       {/* Content Side */}
       <div
@@ -136,11 +167,16 @@ function TimelineItem({ step, index }: { step: Step; index: number }) {
       {/* Center Icon Point */}
       <div className="absolute left-8 sm:left-1/2 -translate-x-1/2 sm:-translate-x-1/2 w-14 h-14 rounded-full bg-[#111] border border-neutral-800 flex items-center justify-center z-10 group hover:border-[#CCFF00] transition-colors duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
         <div className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-10 rounded-full transition-opacity duration-300 pointer-events-none" />
-        <step.icon className="w-6 h-6 text-white group-hover:text-[#CCFF00] transition-colors" />
+        <step.icon
+          width={24}
+          height={24}
+          strokeWidth={1.5}
+          className="w-6 h-6 text-white group-hover:text-[#CCFF00] transition-colors"
+        />
       </div>
 
       {/* Empty Side for layout balance on desktop */}
       <div className="hidden sm:block w-1/2" />
-    </motion.div>
+    </div>
   );
 }
