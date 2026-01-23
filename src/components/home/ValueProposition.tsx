@@ -32,7 +32,7 @@ export function ValueProposition() {
   return (
     <section
       id="estrategia"
-      className="py-24 sm:py-32 bg-[#050505] relative"
+      className="py-24 sm:py-32 bg-[#050505] relative content-visibility-auto"
       ref={ref}
     >
       {/* Subtle grid background */}

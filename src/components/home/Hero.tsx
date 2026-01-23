@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ArrowRight, Play } from 'lucide-react';
 import Image from 'next/image';
@@ -12,6 +13,11 @@ export function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Check if we are on desktop
+      const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+      if (!isDesktop) return; // Skip heavy 3D animations on mobile
+
       // INTRO ANIMATION
       const tl = gsap.timeline();
 
@@ -114,14 +120,24 @@ export function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-[#050505] selection:bg-[#CCFF00] selection:text-black"
     >
-      {/* Ambient Background Glows */}
-      <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-[#CCFF00]/5 rounded-full blur-3xl opacity-20 animate-pulse" />
+      {/* Ambient Background Glows - Pulse only on desktop */}
+      <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-[#CCFF00]/5 rounded-full blur-3xl opacity-20 md:animate-pulse" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#CCFF00]/5 rounded-full blur-3xl opacity-20" />
 
       {/* Mobile Animated Gradient Background */}
       <div className="absolute inset-0 lg:hidden overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-20%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_50%_50%,rgba(204,255,0,0.1),transparent_70%)] animate-slow-spin-reverse opacity-50" />
-        <div className="absolute bottom-[-10%] right-[-20%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_50%_50%,rgba(20,20,20,0.8),transparent_70%)] animate-slow-spin opacity-50" />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          style={{ willChange: 'transform' }}
+          className="absolute top-[-10%] left-[-20%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_50%_50%,rgba(204,255,0,0.1),transparent_70%)] opacity-50"
+        />
+        <motion.div
+          animate={{ rotate: -360 }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+          style={{ willChange: 'transform' }}
+          className="absolute bottom-[-10%] right-[-20%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_50%_50%,rgba(20,20,20,0.8),transparent_70%)] opacity-50"
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
@@ -219,6 +235,7 @@ export function Hero() {
                       src={`/images/companies/logo-${i}.png`}
                       alt={`Company ${i}`}
                       fill
+                      sizes="(max-width: 768px) 32px, 32px"
                       className="object-cover"
                     />
                   </div>

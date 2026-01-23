@@ -58,7 +58,11 @@ export function ServicesGrid() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="servicios" className="py-32 relative" ref={ref}>
+    <section
+      id="servicios"
+      className="py-32 relative content-visibility-auto"
+      ref={ref}
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#CCFF00]/5 via-transparent to-transparent pointer-events-none" />
 
@@ -105,7 +109,7 @@ export function ServicesGrid() {
             >
               {/* Hover Gradient Background */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 md:group-hover:opacity-100 transition-opacity duration-500`}
               />
 
               <div className="relative z-10">

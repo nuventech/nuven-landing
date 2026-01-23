@@ -46,13 +46,13 @@ export function ProcessTimeline() {
     offset: ['start end', 'end start'],
   });
 
-  // Transform scroll progress to height percentage for the line
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  // Transform scroll progress to scaleY for the line
+  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section
       id="proceso"
-      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden"
+      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden content-visibility-auto"
       ref={containerRef}
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -86,8 +86,8 @@ export function ProcessTimeline() {
 
           {/* Vertical Connecting Line (Active Progress) */}
           <motion.div
-            style={{ height: lineHeight }}
-            className="absolute left-8 sm:left-1/2 top-0 w-px bg-gradient-to-b from-[#CCFF00] via-[#CCFF00] to-transparent -translate-x-1/2 origin-top"
+            style={{ scaleY }}
+            className="absolute left-8 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#CCFF00] via-[#CCFF00] to-transparent -translate-x-1/2 origin-top will-change-transform"
           />
 
           <div className="space-y-12 sm:space-y-24">

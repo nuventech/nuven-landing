@@ -32,7 +32,7 @@ export function PainPoints() {
   return (
     <section
       id="desafios"
-      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden"
+      className="py-24 sm:py-32 bg-[#050505] relative overflow-hidden content-visibility-auto"
       ref={ref}
     >
       {/* Background decoration */}
