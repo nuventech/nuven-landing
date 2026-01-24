@@ -1,7 +1,7 @@
 'use client';
 
 import { Code, Map, Rocket, Search, ShieldCheck } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useInView } from '@/src/hooks/useInView';
 

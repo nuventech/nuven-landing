@@ -1,8 +1,10 @@
 'use client';
 
 import { Menu, X } from 'lucide-react';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+
+import { NuvenIcon } from './icons/NuvenIcon';
+import { NuvenLogo } from './icons/NuvenLogo';
 
 const NAV_LINKS = [
   { name: 'Desafíos', href: '#desafios' },
@@ -45,13 +47,10 @@ export function Navbar() {
             <div className="flex items-center justify-between h-14 px-6">
               {/* Logo */}
               <a href="#" className="flex items-center gap-2 group">
-                <Image
-                  src="/Logo web.svg"
-                  alt="Nuven"
-                  width={130}
-                  height={29}
-                  className="group-hover:scale-105 transition-transform"
-                />
+                <div className="flex items-center group-hover:scale-105 transition-transform">
+                  <NuvenIcon className="w-9 h-7 fill-[#AFEB2B]" />
+                  <NuvenLogo className="w-24 h-7 text-[#f8ffee]" />
+                </div>
               </a>
 
               {/* Desktop Links */}

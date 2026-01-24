@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 
+import { siteConfig } from '@/src/constants/site';
+
 export const dynamic = 'force-static';
 
 //TODO Adaptar segun la empresa
@@ -9,7 +11,7 @@ export const dynamic = 'force-static';
 // -Indicar prioridad de páginas o frecuencia de actualización.
 // -Indispensable si tu sitio tiene contenido dinámico.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://nuven.tech';
+  const baseUrl = siteConfig.siteUrl;
 
   return [
     {
@@ -17,18 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
-    },
-    {
-      url: `${baseUrl}/servicios`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contacto`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
     },
   ];
 }

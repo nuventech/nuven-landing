@@ -5,6 +5,7 @@ import { DM_Sans, Geist_Mono } from 'next/font/google';
 
 import { Footer } from '@/src/components/common/Footer';
 import { Navbar } from '@/src/components/common/Navbar';
+import { siteConfig } from '@/src/constants/site';
 
 import { JsonLd } from './_config/JsonLd';
 import {
@@ -35,24 +36,32 @@ const geistMono = Geist_Mono({
 // Utilizar etiquetas aria para mayor SEO y accesibilidad
 // Utilizar Server Components siempre que sea posible para optimizar rendimiento
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nuven.com.ar'),
+  metadataBase: new URL(`${siteConfig.siteUrl}`),
   title: {
-    default: 'Nuven',
-    template: '%s | Nuven',
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: 'Texto corto que explique claramente tu propuesta de valor.',
+  manifest: '/site.webmanifest',
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  alternates: {
+    canonical: '/',
+  },
+  authors: [{ name: siteConfig.authorName, url: siteConfig.authorUrl }],
+  creator: siteConfig.authorName,
+  publisher: siteConfig.authorName,
   openGraph: {
-    title: 'Nuven',
-    description: 'Texto de descripción para cuando compartan el link.',
-    url: 'https://nuven.com.ar',
-    siteName: 'Nuven',
-    locale: 'es_AR',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: `${siteConfig.siteUrl}`,
+    siteName: siteConfig.name,
+    locale: siteConfig.language,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nuven',
-    description: 'Descripción pensada para Twitter/X.',
+    title: siteConfig.title,
+    description: siteConfig.description,
   },
   robots: {
     index: true,
@@ -65,7 +74,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log('renderizando server...');
   return (
     <html lang="es-AR">
       <JsonLd id="schema-org" schema={organizationConfig} />
