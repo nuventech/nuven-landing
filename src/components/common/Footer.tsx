@@ -1,12 +1,15 @@
 'use client';
 
 import { ArrowUpRight, Mail, Phone } from 'lucide-react';
-import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 
+import { NuvenIcon } from '@/src/components/common/icons/NuvenIcon';
+import { NuvenLogo } from '@/src/components/common/icons/NuvenLogo';
+import { siteConfig } from '@/src/constants/site';
 import { useInView } from '@/src/hooks/useInView';
 
 export function Footer() {
+  const { email, phone, formatedPhone } = siteConfig;
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [formData, setFormData] = useState({
@@ -56,22 +59,22 @@ export function Footer() {
 
             <div className="space-y-6">
               <a
-                href="mailto:contacto@nuven.com"
+                href={`mailto:${email}`}
                 className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors"
               >
                 <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-hover:text-black group-hover:border-[#CCFF00] transition-all">
                   <Mail className="w-5 h-5" />
                 </div>
-                <span className="text-lg">contacto@nuven.com</span>
+                <span className="text-lg">{email}</span>
               </a>
               <a
-                href="tel:+5491155667788"
+                href={`tel:${phone}`}
                 className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors"
               >
                 <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-hover:text-black group-hover:border-[#CCFF00] transition-all">
                   <Phone className="w-5 h-5" />
                 </div>
-                <span className="text-lg">+54 9 11 5566-7788</span>
+                <span className="text-lg">{formatedPhone}</span>
               </a>
             </div>
           </div>
@@ -156,14 +159,11 @@ export function Footer() {
 
         {/* Bottom */}
         <div className="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <a href="#" className="flex items-center gap-2">
-            <Image
-              src="/Logo web.svg"
-              alt="Nuven"
-              width={110}
-              height={24}
-              className="opacity-90 hover:opacity-100 transition-opacity"
-            />
+          <a href="#" className="flex items-center gap-2 group">
+            <div className="flex items-center gap-0.25 opacity-90 group-hover:opacity-100 transition-opacity">
+              <NuvenIcon className="w-9 h-6 fill-[#AFEB2B]" />
+              <NuvenLogo className="w-19 h-7 text-[#f8ffee]" />
+            </div>
           </a>
           <p className="text-neutral-500 text-sm">
             © {new Date().getFullYear()} Nuven. Todos los derechos reservados.

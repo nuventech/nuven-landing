@@ -55,4 +55,4 @@
 #           lftp -c "set ftp:ssl-allow no; open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }}; put -O ./public_html deploy.zip; put -O ./public_html out/unzip.php;"
 
 #       - name: 🔓 Trigger Unzip
-#         run: curl --fail https://solucionesproyectables.com/unzip.php
+#         run: curl --fail https://nuven.com.ar/unzip.php

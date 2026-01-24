@@ -35,13 +35,13 @@ export function Hero() {
       // Set text initial state
       gsap.set('.hero-fade-in', { opacity: 0, y: 20 });
 
-      // 2. Animate to Order (The Grid)
+      // 2. Animate to Order (The Grid) - 1s total
       tl.to(blocksRef.current, {
         opacity: 0.8,
         scale: 1,
-        duration: 0.5,
+        duration: 0.2,
         stagger: {
-          amount: 1,
+          amount: 0.25,
           from: 'random',
         },
       }).to(
@@ -52,28 +52,28 @@ export function Hero() {
           z: 0,
           rotationX: 0,
           rotationY: 0,
-          duration: 1.5,
+          duration: 0.5,
           ease: 'power4.inOut',
           stagger: {
-            amount: 0.5,
+            amount: 0.15,
             grid: [4, 4],
             from: 'center',
           },
         },
-        '-=0.2',
+        '-=0.1',
       );
 
-      // 3. Text Fade In (Simpler & Faster)
+      // 3. Text Fade In - starts at position 0 (parallel with grid animation)
       tl.to(
         '.hero-fade-in',
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.1,
+          duration: 0.4,
+          stagger: 0.06,
           ease: 'power2.out',
         },
-        '-=1.0',
+        0, // Start at the beginning of the timeline
       );
 
       // 4. Continuous Floating "Breathing" Animation (Only if performance allows, or keep simple)
