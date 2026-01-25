@@ -40,7 +40,7 @@ const services = [
     icon: Database,
     title: 'Infraestructura Cloud',
     description:
-      'Despliegue escalable en OVHcloud. Contenerización y orquestación con Docker y Kubernetes.',
+      'Despliegue escalable en OVHcloud y Cloudflare. Contenerización y orquestación con Docker y Kubernetes.',
     span: 'md:col-span-2',
     spotlight: 'rgba(204, 255, 0, 0.15)',
   },

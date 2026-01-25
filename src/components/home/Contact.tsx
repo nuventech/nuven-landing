@@ -1,15 +1,19 @@
 'use client';
 
-import { ArrowUpRight, Instagram, Mail, Phone } from 'lucide-react';
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
+import { ArrowUpRight, CheckCircle2, Mail, Phone, XCircle } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 
+import { InstagramIcon } from '@/src/components/common/icons/InstagramIcon';
 import { siteConfig } from '@/src/constants/site';
 import { useInView } from '@/src/hooks/useInView';
 
 export function Contact() {
   const { email, phone, formatedPhone, links } = siteConfig;
   const ref = useRef<HTMLElement>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -17,12 +21,55 @@ export function Contact() {
     descripcion: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    alert('¡Gracias por tu mensaje! Nos pondremos en contacto pronto.');
-    setFormData({ nombre: '', email: '', telefono: '', descripcion: '' });
+
+    if (!turnstileToken) {
+      setErrorMessage('Por favor, completa la verificación de seguridad.');
+      setStatus('error');
+      return;
+    }
+
+    setStatus('loading');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          turnstileToken,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || 'Algo salió mal. Por favor intenta de nuevo.',
+        );
+      }
+
+      setStatus('success');
+      setFormData({ nombre: '', email: '', telefono: '', descripcion: '' });
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
+    } catch (error) {
+      console.error('Submission error:', error);
+      setStatus('error');
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Error al enviar el mensaje',
+      );
+    }
   };
 
   return (
@@ -82,7 +129,7 @@ export function Contact() {
                 className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors"
               >
                 <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-hover:text-black group-hover:border-[#CCFF00] transition-all">
-                  <Instagram className="w-5 h-5" />
+                  <InstagramIcon className="w-5 h-5" />
                 </div>
                 <span className="text-lg group-hover:-translate-x-1 transition-transform duration-300">
                   @nuven.tech
@@ -97,75 +144,136 @@ export function Contact() {
               isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
             }`}
           >
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            {status === 'success' ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-[#CCFF00]/10 border border-[#CCFF00]/20 flex items-center justify-center mb-2">
+                  <CheckCircle2 className="w-8 h-8 text-[#CCFF00]" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">
+                  ¡Mensaje enviado!
+                </h3>
+                <p className="text-neutral-400 max-w-sm">
+                  Gracias por contactarnos. Nuestro equipo revisará tu mensaje y
+                  se pondrá en contacto contigo a la brevedad.
+                </p>
+                <button
+                  onClick={() => setStatus('idle')}
+                  className="mt-6 text-[#CCFF00] hover:underline font-medium"
+                >
+                  Enviar otro mensaje
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-wider text-neutral-400">
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.nombre}
+                      onChange={(e) =>
+                        setFormData({ ...formData, nombre: e.target.value })
+                      }
+                      required
+                      disabled={status === 'loading'}
+                      className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all disabled:opacity-50"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-wider text-neutral-400">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      required
+                      disabled={status === 'loading'}
+                      className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all disabled:opacity-50"
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-2">
                   <label className="text-xs uppercase tracking-wider text-neutral-400">
-                    Nombre
+                    Teléfono
                   </label>
                   <input
-                    type="text"
-                    value={formData.nombre}
+                    type="tel"
+                    value={formData.telefono}
                     onChange={(e) =>
-                      setFormData({ ...formData, nombre: e.target.value })
+                      setFormData({ ...formData, telefono: e.target.value })
                     }
-                    required
-                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all"
+                    disabled={status === 'loading'}
+                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all disabled:opacity-50"
                   />
                 </div>
+
                 <div className="space-y-2">
                   <label className="text-xs uppercase tracking-wider text-neutral-400">
-                    Email
+                    ¿Cómo podemos ayudarte?
                   </label>
-                  <input
-                    type="email"
-                    value={formData.email}
+                  <textarea
+                    rows={4}
+                    value={formData.descripcion}
                     onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
+                      setFormData({ ...formData, descripcion: e.target.value })
                     }
                     required
-                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all"
+                    disabled={status === 'loading'}
+                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all resize-none disabled:opacity-50"
                   />
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-wider text-neutral-400">
-                  Teléfono
-                </label>
-                <input
-                  type="tel"
-                  value={formData.telefono}
-                  onChange={(e) =>
-                    setFormData({ ...formData, telefono: e.target.value })
-                  }
-                  className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all"
-                />
-              </div>
+                <div className="py-2">
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey={
+                      process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
+                      '1x00000000000000000000AA'
+                    }
+                    onSuccess={(token) => setTurnstileToken(token)}
+                    onExpire={() => setTurnstileToken(null)}
+                    onError={() => {
+                      setTurnstileToken(null);
+                      setErrorMessage(
+                        'Error al cargar Turnstile. Por favor recarga la página.',
+                      );
+                    }}
+                    options={{
+                      theme: 'dark',
+                    }}
+                    className="flex justify-center"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-wider text-neutral-400">
-                  ¿Cómo podemos ayudarte?
-                </label>
-                <textarea
-                  rows={4}
-                  value={formData.descripcion}
-                  onChange={(e) =>
-                    setFormData({ ...formData, descripcion: e.target.value })
-                  }
-                  required
-                  className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-700 focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/50 outline-none transition-all resize-none"
-                />
-              </div>
+                {status === 'error' && (
+                  <div className="flex items-center gap-2 text-red-500 text-sm bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
+                    <XCircle className="w-4 h-4 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
 
-              <button
-                type="submit"
-                className="w-full bg-[#CCFF00] text-black py-4 rounded-lg font-bold hover:bg-[#bbe000] transition-colors flex items-center justify-center gap-2 group"
-              >
-                Solicitar Consultoría
-                <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="w-full bg-[#CCFF00] text-black py-4 rounded-lg font-bold hover:bg-[#bbe000] transition-colors flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === 'loading' ? (
+                    <div className="w-6 h-6 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      Solicitar Consultoría
+                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>
