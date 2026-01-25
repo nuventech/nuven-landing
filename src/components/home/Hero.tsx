@@ -129,17 +129,17 @@ export function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-8 items-center lg:items-center">
+        <div className="flex flex-col items-center text-center">
           {/* Text Content */}
-          <div className="order-1 flex flex-col gap-6 lg:gap-8 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 w-fit mx-auto lg:mx-0 hero-fade-in">
+          <div className="flex flex-col gap-6 lg:gap-8 items-center max-w-4xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 w-fit hero-fade-in">
               <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
               <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
                 Software Development
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight text-balance">
               <span className="block hero-fade-in">
                 Transformamos el{' '}
                 <span className="text-neutral-500 font-serif italic">
@@ -150,16 +150,16 @@ export function Hero() {
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-4xl mx-auto lg:mx-0 hero-fade-in">
+            <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl hero-fade-in">
               Convertimos procesos manuales en software de alto impacto. Escalá
               tu negocio con tecnología real, eliminando la dependencia de hojas
               de cálculo.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-2 hero-fade-in">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2 hero-fade-in">
               <a
                 href="#contacto"
-                className="w-full sm:w-auto group relative inline-flex items-center justify-center bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base transition-all hover:scale-105 active:scale-95 shadow-lg"
+                className="w-full sm:w-auto group relative inline-flex items-center justify-center bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,0,0,0.3),0_0_30px_rgba(204,255,0,0.4)]"
               >
                 <span className="relative flex items-center gap-2 z-10">
                   Agendar Estrategia{' '}
@@ -180,7 +180,7 @@ export function Hero() {
               </a>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 text-sm text-neutral-400 mt-4 hero-fade-in">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-neutral-400 mt-4 hero-fade-in">
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
                   <div
@@ -202,14 +202,14 @@ export function Hero() {
             </div>
           </div>
 
-          {/* GSAP 3D Animation Container - VISIBLE ON ALL, but different positioning */}
-          <div className="order-2 flex justify-center lg:justify-end mt-12 lg:mt-0 perspective-[1000px]">
+          {/* GSAP 3D Animation Container - Move to absolute background */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 perspective-[1000px] pointer-events-none opacity-40 lg:opacity-60 overflow-visible">
             {/* The ordered grid that forms */}
             <div
               ref={gridRef}
-              className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[400px] lg:h-[400px] transform-style-3d"
+              className="relative w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] transform-style-3d opacity-50"
             >
-              <div className="grid grid-cols-4 gap-3 sm:gap-4 w-full h-full">
+              <div className="grid grid-cols-4 gap-4 sm:gap-6 w-full h-full">
                 {blocks.map((i) => (
                   <div
                     key={i}
@@ -217,7 +217,7 @@ export function Hero() {
                       if (el) blocksRef.current[i] = el;
                     }}
                     className="
-                      relative w-full h-full rounded-lg 
+                      relative w-full h-full rounded-xl
                       bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]
                       border border-white/10 
                       shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]
@@ -234,8 +234,8 @@ export function Hero() {
                 ))}
               </div>
 
-              {/* Decorative floating elements behind - Using radial gradient for performance */}
-              <div className="absolute -z-10 inset-[-20%] bg-[radial-gradient(circle,rgba(204,255,0,0.08)_0%,transparent_70%)] rounded-full animate-pulse" />
+              {/* Decorative floating elements behind */}
+              <div className="absolute -z-10 inset-[-20%] bg-[radial-gradient(circle,rgba(204,255,0,0.1)_0%,transparent_70%)] rounded-full animate-pulse" />
             </div>
           </div>
         </div>

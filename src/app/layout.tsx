@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { DM_Sans, Geist_Mono } from 'next/font/google';
 
+import { FloatingActions } from '@/src/components/common/FloatingActions';
 import { Footer } from '@/src/components/common/Footer';
 import { Navbar } from '@/src/components/common/Navbar';
 import { siteConfig } from '@/src/constants/site';
@@ -83,6 +84,7 @@ export default function RootLayout({
         <Navbar />
         <main className="w-full">{children}</main>
         <Footer />
+        <FloatingActions />
       </body>
     </html>
   );

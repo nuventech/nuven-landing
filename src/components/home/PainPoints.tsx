@@ -63,7 +63,7 @@ export function PainPoints() {
           {problems.map((item, index) => (
             <div
               key={index}
-              style={{ transitionDelay: `${index * 150 + 500}ms` }}
+              style={{ transitionDelay: `${100}ms` }}
               className={`group p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#CCFF00]/50 transition-all duration-500 hover:bg-white/10 relative overflow-hidden ${
                 isInView
                   ? 'opacity-100 translate-y-0'
@@ -72,14 +72,14 @@ export function PainPoints() {
             >
               <div className="absolute top-0 left-0 w-1 h-full bg-[#CCFF00] scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
 
-              <div className="w-14 h-14 rounded-full bg-neutral-800/80 flex items-center justify-center mb-6 group-hover:bg-[#CCFF00]/10 transition-colors duration-300">
+              <div className="w-14 h-14 rounded-full bg-neutral-800/80 flex items-center justify-center mb-6 group-hover:bg-[#CCFF00]/10 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
                 <item.icon className="w-7 h-7 text-white group-hover:text-[#CCFF00] transition-colors" />
               </div>
 
-              <h3 className="text-xl font-semibold text-white mb-3">
+              <h3 className="text-xl font-semibold text-white mb-3 group-hover:translate-x-1 transition-transform duration-300">
                 {item.title}
               </h3>
-              <p className="text-neutral-400 leading-relaxed">
+              <p className="text-neutral-400 leading-relaxed transition-colors duration-300">
                 {item.description}
               </p>
             </div>
