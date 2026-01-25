@@ -96,7 +96,7 @@ export function Navbar() {
 
       {/* Mobile Menu Overlay - Optimized with Tailwind */}
       <div
-        className={`fixed inset-0 z-40 bg-black transition-all duration-300 md:hidden pt-24 px-6 ${
+        className={`fixed inset-0 z-40 bg-black transition-all duration-300 md:hidden pt-28 px-6 ${
           isOpen
             ? 'opacity-100 pointer-events-auto visible'
             : 'opacity-0 pointer-events-none invisible'

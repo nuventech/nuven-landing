@@ -1,3 +1,4 @@
+import { Contact } from '@/src/components/home/Contact';
 import { Hero } from '@/src/components/home/Hero';
 import { PainPoints } from '@/src/components/home/PainPoints';
 import { ProcessTimeline } from '@/src/components/home/ProcessTimeline';
@@ -12,6 +13,7 @@ export default function Home() {
       <ValueProposition />
       <ServicesGrid />
       <ProcessTimeline />
+      <Contact />
     </main>
   );
 }

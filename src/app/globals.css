@@ -199,6 +199,32 @@
     background-color: var(--brand-lime);
     color: black;
   }
+
+  /* Custom Scrollbar - Premium Dark Theme */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #202020;
+    border: 2px solid #050505;
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ccff00;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #202020 #050505;
+  }
 }
 
 @layer utilities {

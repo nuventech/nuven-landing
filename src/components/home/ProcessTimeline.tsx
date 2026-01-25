@@ -144,7 +144,7 @@ function TimelineItem({ step, index }: { step: Step; index: number }) {
   return (
     <div
       ref={ref}
-      className={`relative flex flex-col sm:flex-row gap-6 sm:gap-0 items-start sm:items-center transition-all duration-700 ${
+      className={`relative flex flex-col sm:flex-row gap-6 sm:gap-0 items-start sm:items-center transition-all duration-700 group ${
         isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
       } ${isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'}`}
       style={{
@@ -154,18 +154,22 @@ function TimelineItem({ step, index }: { step: Step; index: number }) {
     >
       {/* Content Side */}
       <div
-        className={`w-full sm:w-1/2 pl-20 sm:pl-0 ${isEven ? 'sm:pr-16 text-left sm:text-right' : 'sm:pl-16 text-left'}`}
+        className={`w-full sm:w-1/2 pl-20 sm:pl-0 transition-all duration-500 ${
+          isEven
+            ? 'sm:pr-16 text-left sm:text-right group-hover:sm:translate-x-3'
+            : 'sm:pl-16 text-left group-hover:sm:-translate-x-3'
+        }`}
       >
-        <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-3 sm:inline-flex">
+        <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-3 sm:inline-flex transition-colors group-hover:text-[#CCFF00]">
           {step.title}
         </h3>
-        <p className="text-neutral-400 leading-relaxed text-base sm:text-lg">
+        <p className="text-neutral-400 leading-relaxed text-base sm:text-lg transition-colors group-hover:text-neutral-300">
           {step.description}
         </p>
       </div>
 
       {/* Center Icon Point */}
-      <div className="absolute left-8 sm:left-1/2 -translate-x-1/2 sm:-translate-x-1/2 w-14 h-14 rounded-full bg-[#111] border border-neutral-800 flex items-center justify-center z-10 group hover:border-[#CCFF00] transition-colors duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+      <div className="absolute left-8 sm:left-1/2 -translate-x-1/2 sm:-translate-x-1/2 w-14 h-14 rounded-full bg-[#111] border border-neutral-800 flex items-center justify-center z-10 group-hover:border-[#CCFF00] group-hover:scale-110 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
         <div className="absolute inset-0 bg-[#CCFF00] opacity-0 group-hover:opacity-10 rounded-full transition-opacity duration-300 pointer-events-none" />
         <step.icon
           width={24}
