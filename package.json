@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "bun granular-images optimize && next build",
+    "build": "next build",
+    "build:local": "bun granular-images optimize && next build",
     "build:core": "next build",
+    "build:cloudflare": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "preview": "serve out",
     "lint": "eslint .",
     "prettier": "prettier .",
-    "format": "pnpm run lint --fix && pnpm prettier --write .",
+    "format": "bun run lint --fix && bun prettier --write .",
     "prepare": "husky",
     "fresh-install": "node scripts/fresh-install.js",
     "granular-images": "next-granular-images"
@@ -38,6 +40,7 @@
     "dependencyDashboard": true
   },
   "dependencies": {
+    "@marsidev/react-turnstile": "1.4.1",
     "@radix-ui/react-slot": "1.2.4",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
@@ -48,9 +51,11 @@
     "next-granular-images": "1.0.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "resend": "6.8.0",
     "tailwind-merge": "3.4.0"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "1.13.16",
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
     "@tailwindcss/postcss": "4.1.17",
