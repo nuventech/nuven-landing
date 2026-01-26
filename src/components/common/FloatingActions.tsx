@@ -29,7 +29,7 @@ export function FloatingActions() {
         className={`
           w-14 h-14 rounded-full bg-[#CCFF00] text-black
           flex items-center justify-center shadow-[0_8px_32px_rgba(204,255,0,0.3)]
-          hover:scale-110 active:scale-95 transition-all duration-300
+          hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer
           ${
             showTop
               ? 'translate-y-0 opacity-100'

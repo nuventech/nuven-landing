@@ -10,10 +10,27 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { nombre, email, telefono, descripcion, turnstileToken } = body;
 
+    // 0. Environment Validation
+    if (!process.env.TURNSTILE_SECRET_KEY) {
+      console.error('Missing TURNSTILE_SECRET_KEY');
+      return NextResponse.json(
+        { error: 'Error de configuración del servidor (Turnstile)' },
+        { status: 500 },
+      );
+    }
+
+    if (!process.env.RESEND_API_KEY) {
+      console.error('Missing RESEND_API_KEY');
+      return NextResponse.json(
+        { error: 'Error de configuración del servidor (Resend)' },
+        { status: 500 },
+      );
+    }
+
     // 1. Validate Turnstile Token
     if (!turnstileToken) {
       return NextResponse.json(
-        { error: 'Turnstile token missing' },
+        { error: 'Falta el token de verificación' },
         { status: 400 },
       );
     }
@@ -26,7 +43,7 @@ export async function POST(request: Request) {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: `secret=${encodeURIComponent(
-          process.env.TURNSTILE_SECRET_KEY || '',
+          process.env.TURNSTILE_SECRET_KEY,
         )}&response=${encodeURIComponent(turnstileToken)}`,
       },
     );
@@ -34,16 +51,19 @@ export async function POST(request: Request) {
     const verifyData = await verifyResponse.json();
 
     if (!verifyData.success) {
+      console.error('Turnstile verification failed:', verifyData);
       return NextResponse.json(
-        { error: 'Invalid captcha validation' },
+        { error: 'La verificación de seguridad ha fallado' },
         { status: 400 },
       );
     }
 
     // 2. Send Email via Resend
-    const { data, error } = await resend.emails.send({
-      from: 'Nuven Contact <onboarding@resend.dev>', // Change this to your verified domain in production
-      to: [process.env.CONTACT_RECIPIENT_EMAIL || ''],
+    const recipient =
+      process.env.CONTACT_RECIPIENT_EMAIL || 'contacto@nuven.com.ar';
+    const { error } = await resend.emails.send({
+      from: 'Nuven Contact <contacto@nuven.com.ar>',
+      to: [recipient],
       subject: `Nuevo mensaje de contacto: ${nombre}`,
       replyTo: email,
       html: `
@@ -57,18 +77,18 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error('Resend error details:', JSON.stringify(error, null, 2));
       return NextResponse.json(
-        { error: 'Failed to send email' },
+        { error: 'No se pudo enviar el correo electrónico' },
         { status: 500 },
       );
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true });
   } catch (err) {
     console.error('Contact form error:', err);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Error interno del servidor' },
       { status: 500 },
     );
   }
