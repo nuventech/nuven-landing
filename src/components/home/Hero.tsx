@@ -37,7 +37,7 @@ export function Hero() {
 
       // 2. Animate to Order (The Grid) - 1s total
       tl.to(blocksRef.current, {
-        opacity: 0.8,
+        opacity: 1,
         scale: 1,
         duration: 0.2,
         stagger: {
@@ -116,7 +116,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center pt-36 lg:pt-50 pb-12 lg:pb-0 overflow-hidden bg-[#050505] selection:bg-[#CCFF00] selection:text-black"
+      className="relative min-h-screen flex flex-col items-center pt-36 lg:pt-55 pb-12 lg:pb-0 overflow-hidden bg-[#050505] selection:bg-[#CCFF00] selection:text-black"
     >
       {/* Ambient Background Glows - NO BLURS, use radial gradients for similar effect with better performance */}
       <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(204,255,0,0.05)_0%,transparent_70%)] opacity-20 md:animate-pulse" />
@@ -203,7 +203,7 @@ export function Hero() {
           </div>
 
           {/* GSAP 3D Animation Container - Move to absolute background */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 perspective-[1000px] pointer-events-none opacity-40 lg:opacity-60 overflow-visible">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pb-25 lg:pb-0 lg:pt-15 -z-10 perspective-[1000px] pointer-events-none opacity-30 lg:opacity-60 overflow-visible">
             {/* The ordered grid that forms */}
             <div
               ref={gridRef}
@@ -218,8 +218,8 @@ export function Hero() {
                     }}
                     className="
                       relative w-full h-full rounded-xl
-                      bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]
-                      border border-white/10 
+                      bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a]
+                      border border-white/15
                       shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]
                       group
                     "
