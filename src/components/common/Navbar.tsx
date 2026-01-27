@@ -46,7 +46,11 @@ export function Navbar() {
           >
             <div className="flex items-center justify-between h-14 px-6">
               {/* Logo */}
-              <a href="#" className="flex items-center gap-2 group">
+              <a
+                href="#"
+                className="flex items-center gap-2 group"
+                aria-label="Ir al inicio"
+              >
                 <div className="flex items-center group-hover:scale-105 transition-transform">
                   <NuvenIcon className="w-9 h-7 fill-[#AFEB2B]" />
                   <NuvenLogo className="w-24 h-7 text-[#f8ffee]" />

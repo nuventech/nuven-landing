@@ -167,10 +167,14 @@ export function Contact() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-xs uppercase tracking-wider text-neutral-400">
+                    <label
+                      htmlFor="nombre"
+                      className="text-xs uppercase tracking-wider text-neutral-400"
+                    >
                       Nombre
                     </label>
                     <input
+                      id="nombre"
                       type="text"
                       value={formData.nombre}
                       onChange={(e) =>
@@ -182,10 +186,14 @@ export function Contact() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs uppercase tracking-wider text-neutral-400">
+                    <label
+                      htmlFor="email"
+                      className="text-xs uppercase tracking-wider text-neutral-400"
+                    >
                       Email
                     </label>
                     <input
+                      id="email"
                       type="email"
                       value={formData.email}
                       onChange={(e) =>
@@ -199,10 +207,14 @@ export function Contact() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-wider text-neutral-400">
+                  <label
+                    htmlFor="telefono"
+                    className="text-xs uppercase tracking-wider text-neutral-400"
+                  >
                     Teléfono
                   </label>
                   <input
+                    id="telefono"
                     type="tel"
                     value={formData.telefono}
                     onChange={(e) =>
@@ -214,10 +226,14 @@ export function Contact() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-wider text-neutral-400">
+                  <label
+                    htmlFor="descripcion"
+                    className="text-xs uppercase tracking-wider text-neutral-400"
+                  >
                     ¿Cómo podemos ayudarte?
                   </label>
                   <textarea
+                    id="descripcion"
                     rows={4}
                     value={formData.descripcion}
                     onChange={(e) =>

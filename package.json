@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "build:local": "bun granular-images optimize && next build",
-    "build:core": "next build",
     "build:cloudflare": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "preview": "serve out",

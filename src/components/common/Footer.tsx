@@ -22,7 +22,11 @@ export function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-6">
-            <a href="#" className="flex items-center gap-2 group w-fit">
+            <a
+              href="#"
+              className="flex items-center gap-2 group w-fit"
+              aria-label="Ir al inicio"
+            >
               <div className="flex items-center gap-0.25 opacity-90 group-hover:opacity-100 transition-opacity">
                 <NuvenIcon className="w-9 h-6 fill-[#AFEB2B]" />
                 <NuvenLogo className="w-19 h-7 text-[#f8ffee]" />
@@ -35,9 +39,9 @@ export function Footer() {
 
           {/* Explore Links */}
           <div className="space-y-6">
-            <h4 className="text-white font-bold text-lg uppercase tracking-wider">
+            <h3 className="text-white font-bold text-lg uppercase tracking-wider">
               Explorar
-            </h4>
+            </h3>
             <ul className="space-y-4">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
@@ -54,9 +58,9 @@ export function Footer() {
 
           {/* Company Info / Legal */}
           <div className="space-y-6">
-            <h4 className="text-white font-bold text-lg uppercase tracking-wider">
+            <h3 className="text-white font-bold text-lg uppercase tracking-wider">
               Compañía
-            </h4>
+            </h3>
             <p className="text-neutral-400 text-sm leading-relaxed">
               Basados en {siteConfig.province},<br />
               Tucumán, Argentina.
@@ -72,13 +76,13 @@ export function Footer() {
           <div className="flex items-center gap-6">
             <a
               href="#"
-              className="text-neutral-500 hover:text-white text-xs transition-colors"
+              className="text-neutral-400 hover:text-white text-sm transition-colors"
             >
               Política de Privacidad
             </a>
             <a
               href="#"
-              className="text-neutral-500 hover:text-white text-xs transition-colors"
+              className="text-neutral-400 hover:text-white text-sm transition-colors"
             >
               Términos de Servicio
             </a>
