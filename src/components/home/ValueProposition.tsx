@@ -102,6 +102,7 @@ function FeatureCard({
       className={`
         group relative overflow-hidden rounded-3xl p-px transition-all duration-500
         hover:shadow-[0_0_40px_-10px_rgba(204,255,0,0.4)]
+        active:shadow-[0_0_40px_-10px_rgba(204,255,0,0.4)]
         ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
       `}
     >
@@ -110,23 +111,23 @@ function FeatureCard({
         className="
           absolute inset-[-1000%] animate-[spin_4s_linear_infinite] 
           bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_70%,#CCFF00_100%)] 
-          opacity-0 group-hover:opacity-100 transition-opacity duration-500
+          opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500
         "
       />
 
       {/* Inner Content Card */}
-      <div className="relative h-full w-full bg-[#111] rounded-[23px] overflow-hidden flex flex-col border border-white/5 group-hover:border-transparent transition-colors p-8">
+      <div className="relative h-full w-full bg-[#111] rounded-[23px] overflow-hidden flex flex-col border border-white/5 group-hover:border-transparent group-active:border-transparent transition-colors p-8">
         {/* Fixed Top-Right Spotlight */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(204,255,0,0.08),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(204,255,0,0.08),transparent_70%)] opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
         <feature.icon
-          className="w-12 h-12 text-[#CCFF00] mb-6 relative z-10 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300"
+          className="w-12 h-12 text-[#CCFF00] mb-6 relative z-10 group-hover:scale-110 group-active:scale-110 group-hover:-translate-y-1 group-active:-translate-y-1 transition-all duration-300"
           strokeWidth={1}
         />
-        <h3 className="text-2xl font-bold text-white mb-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300">
+        <h3 className="text-2xl font-bold text-white mb-4 relative z-10 group-hover:translate-x-1 group-active:translate-x-1 transition-transform duration-300">
           {feature.title}
         </h3>
-        <p className="text-neutral-400 text-lg leading-relaxed relative z-10 transition-colors duration-300">
+        <p className="text-neutral-400 text-lg leading-relaxed relative z-10 transition-colors duration-300 group-active:text-neutral-300">
           {feature.description}
         </p>
       </div>

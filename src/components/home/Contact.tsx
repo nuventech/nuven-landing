@@ -104,10 +104,10 @@ export function Contact() {
                 href={`mailto:${email}`}
                 className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors"
               >
-                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-hover:text-black group-hover:border-[#CCFF00] transition-all">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-active:bg-[#CCFF00] group-hover:text-black group-active:text-black group-hover:border-[#CCFF00] group-active:border-[#CCFF00] transition-all">
                   <Mail className="w-5 h-5" />
                 </div>
-                <span className="text-lg group-hover:-translate-x-1 transition-transform duration-300">
+                <span className="text-lg group-hover:-translate-x-1 group-active:-translate-x-1 transition-transform duration-300">
                   {email}
                 </span>
               </a>
@@ -115,10 +115,10 @@ export function Contact() {
                 href={`tel:${phone}`}
                 className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors"
               >
-                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-hover:text-black group-hover:border-[#CCFF00] transition-all">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-active:bg-[#CCFF00] group-hover:text-black group-active:text-black group-hover:border-[#CCFF00] group-active:border-[#CCFF00] transition-all">
                   <Phone className="w-5 h-5" />
                 </div>
-                <span className="text-lg group-hover:-translate-x-1 transition-transform duration-300">
+                <span className="text-lg group-hover:-translate-x-1 group-active:-translate-x-1 transition-transform duration-300">
                   {formatedPhone}
                 </span>
               </a>
@@ -128,10 +128,10 @@ export function Contact() {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors"
               >
-                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-hover:text-black group-hover:border-[#CCFF00] transition-all">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-[#CCFF00] group-active:bg-[#CCFF00] group-hover:text-black group-active:text-black group-hover:border-[#CCFF00] group-active:border-[#CCFF00] transition-all">
                   <InstagramIcon className="w-5 h-5" />
                 </div>
-                <span className="text-lg group-hover:-translate-x-1 transition-transform duration-300">
+                <span className="text-lg group-hover:-translate-x-1 group-active:-translate-x-1 transition-transform duration-300">
                   @nuven.tech
                 </span>
               </a>
@@ -277,14 +277,14 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full bg-[#CCFF00] text-black py-4 rounded-lg font-bold hover:bg-[#bbe000] transition-colors flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-[#CCFF00] text-black py-4 rounded-lg font-bold hover:bg-[#bbe000] active:bg-[#bbe000] transition-colors flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
                 >
                   {status === 'loading' ? (
                     <div className="w-6 h-6 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                   ) : (
                     <>
                       Solicitar Consultoría
-                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 group-active:translate-x-1 group-active:-translate-y-1 transition-transform" />
                     </>
                   )}
                 </button>

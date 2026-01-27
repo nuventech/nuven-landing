@@ -64,22 +64,22 @@ export function PainPoints() {
             <div
               key={index}
               style={{ transitionDelay: `${100}ms` }}
-              className={`group p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#CCFF00]/50 transition-all duration-500 hover:bg-white/10 relative overflow-hidden ${
+              className={`group p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#CCFF00]/50 active:border-[#CCFF00]/50 transition-all duration-500 hover:bg-white/10 active:bg-white/10 relative overflow-hidden ${
                 isInView
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
               }`}
             >
-              <div className="absolute top-0 left-0 w-1 h-full bg-[#CCFF00] scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
+              <div className="absolute top-0 left-0 w-1 h-full bg-[#CCFF00] scale-y-0 group-hover:scale-y-100 group-active:scale-y-100 transition-transform duration-300 origin-top" />
 
-              <div className="w-14 h-14 rounded-full bg-neutral-800/80 flex items-center justify-center mb-6 group-hover:bg-[#CCFF00]/10 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
-                <item.icon className="w-7 h-7 text-white group-hover:text-[#CCFF00] transition-colors" />
+              <div className="w-14 h-14 rounded-full bg-neutral-800/80 flex items-center justify-center mb-6 group-hover:bg-[#CCFF00]/10 group-active:bg-[#CCFF00]/10 group-hover:scale-110 group-active:scale-110 group-hover:-translate-y-1 group-active:-translate-y-1 transition-all duration-300">
+                <item.icon className="w-7 h-7 text-white group-hover:text-[#CCFF00] group-active:text-[#CCFF00] transition-colors" />
               </div>
 
-              <h3 className="text-xl font-semibold text-white mb-3 group-hover:translate-x-1 transition-transform duration-300">
+              <h3 className="text-xl font-semibold text-white mb-3 group-hover:translate-x-1 group-active:translate-x-1 transition-transform duration-300">
                 {item.title}
               </h3>
-              <p className="text-neutral-400 leading-relaxed transition-colors duration-300">
+              <p className="text-neutral-400 leading-relaxed transition-colors duration-300 group-active:text-neutral-300">
                 {item.description}
               </p>
             </div>

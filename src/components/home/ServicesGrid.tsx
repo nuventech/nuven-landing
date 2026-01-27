@@ -143,6 +143,7 @@ function ServiceCard({
       className={`
         group relative overflow-hidden rounded-3xl p-px transition-all duration-300
         hover:shadow-[0_0_40px_-10px_rgba(204,255,0,0.4)]
+        active:shadow-[0_0_40px_-10px_rgba(204,255,0,0.4)]
         ${service.span}
         ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
       `}
@@ -157,29 +158,29 @@ function ServiceCard({
       />
 
       {/* Inner Content Card */}
-      <div className="relative h-full w-full bg-[#111] rounded-[23px] overflow-hidden flex flex-col border border-white/5 group-hover:border-transparent transition-colors p-8">
+      <div className="relative h-full w-full bg-[#111] rounded-[23px] overflow-hidden flex flex-col border border-white/5 group-hover:border-transparent group-active:border-transparent transition-colors p-8">
         {/* Interactive Spotlight Overlay */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
+          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 z-0"
           style={{
             background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), ${service.spotlight}, transparent 80%)`,
           }}
         />
 
         <div className="relative z-10">
-          <div className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#CCFF00] group-hover:scale-110 transition-all duration-300">
+          <div className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#CCFF00] group-active:text-[#CCFF00] group-hover:scale-110 group-active:scale-110 transition-all duration-300">
             <service.icon strokeWidth={1.5} className="w-6 h-6" />
           </div>
 
-          <h4 className="text-2xl font-bold text-white mb-3 group-hover:translate-x-1 transition-transform duration-300">
+          <h4 className="text-2xl font-bold text-white mb-3 group-hover:translate-x-1 group-active:translate-x-1 transition-transform duration-300">
             {service.title}
           </h4>
-          <p className="text-neutral-400 group-hover:text-neutral-300 transition-colors">
+          <p className="text-neutral-400 group-hover:text-neutral-300 group-active:text-neutral-300 transition-colors">
             {service.description}
           </p>
         </div>
 
-        <div className="relative z-10 mt-auto pt-6 flex justify-end opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+        <div className="relative z-10 mt-auto pt-6 flex justify-end opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 group-active:translate-y-0">
           <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white">
             <ArrowUpRight className="w-5 h-5" />
           </div>
@@ -212,6 +213,7 @@ function CTACard({ index, isInView }: { index: number; isInView: boolean }) {
       className={`
         group relative overflow-hidden rounded-3xl p-px transition-all duration-300
         hover:shadow-[0_0_40px_-10px_rgba(204,255,0,0.4)]
+        active:shadow-[0_0_40px_-10px_rgba(204,255,0,0.4)]
         md:col-span-1
         ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
       `}
@@ -226,10 +228,10 @@ function CTACard({ index, isInView }: { index: number; isInView: boolean }) {
       />
 
       {/* Inner Content Card */}
-      <div className="relative h-full w-full bg-[#111] rounded-[23px] overflow-hidden flex flex-col border border-[#CCFF00]/20 group-hover:border-transparent transition-colors p-8 shadow-[inset_0_0_20px_rgba(204,255,0,0.05)]">
+      <div className="relative h-full w-full bg-[#111] rounded-[23px] overflow-hidden flex flex-col border border-[#CCFF00]/20 group-hover:border-transparent group-active:border-transparent transition-colors p-8 shadow-[inset_0_0_20px_rgba(204,255,0,0.05)]">
         {/* Interactive Spotlight Overlay for CTA */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
+          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 z-0"
           style={{
             background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(204, 255, 0, 0.12), transparent 80%)`,
           }}

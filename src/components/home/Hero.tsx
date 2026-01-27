@@ -159,7 +159,7 @@ export function Hero() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2 hero-fade-in">
               <a
                 href="#contacto"
-                className="w-full sm:w-auto group relative inline-flex items-center justify-center bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,0,0,0.3),0_0_30px_rgba(204,255,0,0.4)]"
+                className="w-full sm:w-auto group relative inline-flex items-center justify-center bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,0,0,0.3),0_0_30px_rgba(204,255,0,0.4)] active:shadow-[0_10px_25px_rgba(204,255,0,0.4)]"
               >
                 <span className="relative flex items-center gap-2 z-10">
                   Agendar Estrategia{' '}
@@ -169,12 +169,12 @@ export function Hero() {
 
               <a
                 href="#proyectos"
-                className="w-full sm:w-auto group relative px-8 py-4 rounded-full font-bold text-base text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex items-center justify-center gap-3 active:scale-95"
+                className="w-full sm:w-auto group relative px-8 py-4 rounded-full font-bold text-base text-white border border-white/10 bg-white/5 hover:bg-white/10 active:bg-white/20 transition-all flex items-center justify-center gap-3 active:scale-95"
               >
-                <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform border border-white/5 group-hover:border-[#CCFF00]/50 group-hover:text-[#CCFF00]">
+                <div className="relative z-10 w-8 h-8 rounded-full border border-white/5 bg-white/10 flex items-center justify-center transition-transform group-hover:scale-110 group-active:scale-110 group-hover:border-[#CCFF00]/50 group-active:border-[#CCFF00]/50 group-hover:text-[#CCFF00] group-active:text-[#CCFF00]">
                   <Play className="w-3 h-3 fill-current" />
                 </div>
-                <span className="relative z-10 group-hover:text-[#CCFF00] transition-colors">
+                <span className="relative z-10 transition-colors group-hover:text-[#CCFF00] group-active:text-[#CCFF00]">
                   Nuestros Casos
                 </span>
               </a>
