@@ -4,6 +4,8 @@ import gsap from 'gsap';
 import { ArrowRight, Play } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
+import { NuvenIcon } from '../common/icons/NuvenIcon';
+
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -37,7 +39,7 @@ export function Hero() {
 
       // 2. Animate to Order (The Grid) - 1s total
       tl.to(blocksRef.current, {
-        opacity: 0.8,
+        opacity: 1,
         scale: 1,
         duration: 0.2,
         stagger: {
@@ -52,13 +54,8 @@ export function Hero() {
           z: 0,
           rotationX: 0,
           rotationY: 0,
-          duration: 0.5,
+          duration: 0.8,
           ease: 'power4.inOut',
-          stagger: {
-            amount: 0.15,
-            grid: [4, 4],
-            from: 'center',
-          },
         },
         '-=0.1',
       );
@@ -110,13 +107,13 @@ export function Hero() {
     return () => ctx.revert();
   }, []);
 
-  // Generate grid of blocks (16 blocks for a 4x4 grid)
-  const blocks = Array.from({ length: 16 }, (_, i) => i);
+  // Create a single block for the hero animation
+  const blocks = [1];
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center pt-36 lg:pt-50 pb-12 lg:pb-0 overflow-hidden bg-[#050505] selection:bg-[#CCFF00] selection:text-black"
+      className="relative min-h-screen flex flex-col items-center pt-36 lg:pt-55 pb-12 lg:pb-0 overflow-hidden bg-[#050505] selection:bg-[#CCFF00] selection:text-black"
     >
       {/* Ambient Background Glows - NO BLURS, use radial gradients for similar effect with better performance */}
       <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(204,255,0,0.05)_0%,transparent_70%)] opacity-20 md:animate-pulse" />
@@ -169,10 +166,10 @@ export function Hero() {
 
               <a
                 href="#proyectos"
-                className="w-full sm:w-auto group relative px-8 py-4 rounded-full font-bold text-base text-white border border-white/10 bg-white/5 hover:bg-white/10 active:bg-white/20 transition-all flex items-center justify-center gap-3 active:scale-95"
+                className="w-full sm:w-auto group relative inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-base text-white border border-white/10 bg-white/5 hover:bg-white/10 active:bg-white/20 transition-all gap-3 active:scale-95"
               >
-                <div className="relative z-10 w-8 h-8 rounded-full border border-white/5 bg-white/10 flex items-center justify-center transition-transform group-hover:scale-110 group-active:scale-110 group-hover:border-[#CCFF00]/50 group-active:border-[#CCFF00]/50 group-hover:text-[#CCFF00] group-active:text-[#CCFF00]">
-                  <Play className="w-3 h-3 fill-current" />
+                <div className="relative z-10 w-6 h-6 rounded-full border border-white/5 bg-white/10 flex items-center justify-center transition-transform group-hover:scale-110 group-active:scale-110 group-hover:border-[#CCFF00]/50 group-active:border-[#CCFF00]/50 group-hover:text-[#CCFF00] group-active:text-[#CCFF00] -ml-1">
+                  <Play className="w-2.5 h-2.5 fill-current" />
                 </div>
                 <span className="relative z-10 transition-colors group-hover:text-[#CCFF00] group-active:text-[#CCFF00]">
                   Nuestros Casos
@@ -203,13 +200,13 @@ export function Hero() {
           </div>
 
           {/* GSAP 3D Animation Container - Move to absolute background */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 perspective-[1000px] pointer-events-none opacity-40 lg:opacity-60 overflow-visible">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pb-45 sm:pb-0 sm:pt-25 lg:pt-10 -z-10 perspective-[1000px] pointer-events-none opacity-25 lg:opacity-35 overflow-visible">
             {/* The ordered grid that forms */}
             <div
               ref={gridRef}
-              className="relative w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] transform-style-3d opacity-50"
+              className="relative w-[500px] h-[500px] sm:w-[1000px] sm:h-[1000px] lg:w-[1250px] lg:h-[1250px] transform-style-3d opacity-100"
             >
-              <div className="grid grid-cols-4 gap-4 sm:gap-6 w-full h-full">
+              <div className="w-full h-full flex items-center justify-center">
                 {blocks.map((i) => (
                   <div
                     key={i}
@@ -217,19 +214,13 @@ export function Hero() {
                       if (el) blocksRef.current[i] = el;
                     }}
                     className="
-                      relative w-full h-full rounded-xl
-                      bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]
-                      border border-white/10 
-                      shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]
+                      relative w-[60%] h-[60%]
+                      flex items-center justify-center
+                      perspective-[500px]
                       group
                     "
                   >
-                    {/* Inner highlight - slightly stronger for depth */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-[#CCFF00]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
-
-                    {/* Fake UI lines */}
-                    <div className="absolute top-2 left-2 right-2 h-[1px] bg-white/10 rounded-full" />
-                    <div className="absolute top-4 left-2 w-1/2 h-[1px] bg-white/10 rounded-full" />
+                    <NuvenIcon className="w-full h-auto fill-white/10 group-hover:fill-[#CCFF00] transition-all duration-500 drop-shadow-[0_0_30px_rgba(204,255,0,0.1)]" />
                   </div>
                 ))}
               </div>
